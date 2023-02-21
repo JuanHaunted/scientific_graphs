@@ -32,19 +32,42 @@ eq2 = lambda x: 0.0345*(x**2) - 3.7344*x + 145.53
 np.vectorize(eq2)
 theta_axis_inter = np.linspace(40, 70, 10)
 delta_inter = eq2(theta_axis_inter)
+amax = np.argmin(delta_inter)
+delta_min = delta_inter[amax]
+delta_min_str = str((round(delta_min, 3)))
+xlim,ylim = plt.xlim(), plt.ylim()
 
 print(len(theta_i), len(delta))
 fig1, ax1 = plt.subplots(figsize=(5, 3))
-
-ax1.set_title(r'Desviación Mínima $\delta$  v.s Ángulo de Incidencia $\theta_i$')
+plt.plot([theta_axis_inter[amax], theta_axis_inter[amax], 38], [43, delta_inter[amax], delta_inter[amax]], linestyle="--", color='magenta', label=r'$\delta_{min}$ ' + f'= {delta_min_str}')
+ax1.set_title(r'Desviación $\delta$  v.s Ángulo de Incidencia $\theta_i$')
 ax1.set_ylabel(r'Desviación $\delta$ (°)')
 ax1.set_xlabel(r'Ángulo de Incidencia $\theta_i$ (°)')
 ax1.scatter(theta_i, delta)
 ax1.plot(theta_axis_inter, delta_inter, '--', color='orange', label=r'$0.0345x^{2} - 3.7344x + 145.53$')
-ax1.text(55, 51, r'$r^{2} = 0.7709$', fontsize = 10)
-ax1.legend(loc='upper right')
+ax1.text(49, 48, r'$r^{2} = 0.7709$', fontsize = 10)
+ax1.legend(loc='best')
 ax1.grid()
 fig1.tight_layout()
+
+
+theta_e = [73.13, 67.07, 62.8, 60.28, 57.42, 45.98, 46.4, 42.92, 42.8, 41.87]
+eq3 = lambda x: (-0.9501*x) + 105.89
+np.vectorize(eq3)
+theta_axis_inter = np.linspace(40, 70, 10)
+the_inter = eq3(theta_axis_inter)
+
+fig2, ax2 = plt.subplots(figsize=(5, 3))
+
+ax2.set_title(r'Ángulo de Salida $\theta_e$  v.s Ángulo de Incidencia $\theta_i$')
+ax2.set_ylabel(r'Ángulo de Salida $\theta_e$ (°)')
+ax2.set_xlabel(r'Ángulo de Incidencia $\theta_i$ (°)')
+ax2.scatter(theta_i, theta_e)
+ax2.plot(theta_axis_inter, the_inter, '--', color='orange', label=r'$-0.9501x + 105.89')
+ax2.text(56, 58, r'$r^{2} = 0.9467$', fontsize = 10)
+ax2.legend(loc='upper right')
+ax2.grid()
+fig2.tight_layout()
 
 
 plt.show()

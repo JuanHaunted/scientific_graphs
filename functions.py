@@ -37,6 +37,14 @@ def get_cauchy_aprox(l1, l2, l3, n_array=[1, 1, 1]):
     return lambda lamb: x[0] + (x[1]/(lamb**2)) + (x[2]/(lamb**4))  
 
 
+def get_cauchy_constants(l1, l2, l3, n_array=[1, 1, 1]):
+    A = np.array(([1, 1/(l1**2), 1/(l1**4)], [1, 1/(l2**2), 1/(l2**4)], [1, 1/(l3**2), 1/(l3**4)]))
+    b = np.array((n_array)).reshape(3, 1)
+    x = np.linalg.inv(A) @ b 
+    #lambda lamb: x[0] + (x[1]/(lamb**2)) + (x[2]/(lamb**4))  
+    return x
+
+
 def get_refraction_angle(min_deviation):
     alpha = np.deg2rad(60)
     min_deviation = np.deg2rad(min_deviation)
